@@ -11,20 +11,20 @@ const size_t UART_TX_BUF_SIZE = 20;
 void onDataReceived(const uint8_t* data, size_t len, const BlePeerDevice& peer, void* context);
 
 void onDataReceived(const uint8_t* data, size_t len, const BlePeerDevice& peer, void* context) { // for receiving a message
-    for (size_t i = 0; i < len; i++) {
-        Serial.write(data[i]);
-    }
-    if(data[0] == '1'){ // if entered 1 display on the oled display
-      display.clearDisplay();
-      display.setTextSize(1);
-      display.setTextColor(WHITE);
-      display.setCursor(0, 0);
-      display.println("you enterd 1");
-      display.display();
-    }
-    if(data[0] == '0'){ // if entered 0 disconnect
-      BLE.disconnect();
-    }
+  for (size_t i = 0; i < len; i++){
+    Serial.write(data[i]);
+  }
+  if (data[0] == '1'){ // if entered 1 display on the oled display
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setTextColor(WHITE);
+    display.setCursor(0, 0);
+    display.println("you enterd 1");
+    display.display();
+  }
+  if (data[0] == '0'){ // if entered 0 disconnect
+    BLE.disconnect();
+  }
 }
 const BleUuid serviceUuid("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
 const BleUuid rxUuid("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
@@ -54,10 +54,10 @@ void setup() {
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
   if(BLE.connected()){ // if connected flash a blue light
-  RGB.color(0, 0, 255);
-} else{ // if disconnected flash a yellow light
-  RGB.color(255, 255, 0);
-}
+    RGB.color(0, 0, 255);
+  } else{ // if disconnected flash a yellow light
+    RGB.color(255, 255, 0);
+  }
   if(BLE.connected() && connected == false){ // if connected send a message
     delay(5000);
     uint8_t txBuf[30] = "connected!"; 
